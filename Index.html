@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Height to Width Ratio Calculator</title>
+    <style>
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form id="ratioForm">
+        <label for="height">Height:</label>
+        <input type="number" id="height" placeholder="Height">
+
+        <label for="width">Width:</label>
+        <input type="number" id="width" placeholder="Width">
+        <br>
+        <button type="button" onclick="calculateValues()">Calculate</button>
+    </form>
+    
+    <br>
+    <label>Ratio:</label>
+    <span id="ratioValue"></span>
+
+    <script>
+        // Function to calculate the ratio and display it
+        function calculateValues() {
+            // Get the values from the input fields
+            const height = document.getElementById('height').value;
+            const width = document.getElementById('width').value;
+
+            // Convert the values to integers
+            const heightNum = parseInt(height, 10);
+            const widthNum = parseInt(width, 10);
+
+            // Check for valid inputs
+            if (isNaN(heightNum) || isNaN(widthNum) || heightNum <= 0 || widthNum <= 0) {
+                alert("Please enter valid positive numbers for height and width.");
+                return;
+            }
+
+            // Function to calculate the greatest common divisor (GCD)
+            function gcd(a, b) {
+                while (b !== 0) {
+                    [a, b] = [b, a % b];
+                }
+                return a;
+            }
+
+            // Calculate the GCD
+            const divisor = gcd(heightNum, widthNum);
+
+            // Simplify the height and width using the GCD
+            const simplifiedHeight = heightNum / divisor;
+            const simplifiedWidth = widthNum / divisor;
+
+            // Display the ratio in the span element
+            document.getElementById('ratioValue').innerText = `${simplifiedHeight} : ${simplifiedWidth}`;
+        }
+    </script>
+</body>
+</html>
